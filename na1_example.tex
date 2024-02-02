@@ -1,10 +1,106 @@
-\documentclass[UTF8]{ctexart}
+\documentclass[lang=cn,bibend=bibtex]{elegantpaper}
 \title{数值分析作业建议}
 \author{Chenchen}
 \date{\today}
+\usepackage{amsmath}  
+\usepackage{amsthm}
+% 定义定理样式
+\newtheoremstyle{boldexercise} % 名称
+{3pt} % 上空间
+{3pt} % 下空间
+{} % 内容字体
+{} % 缩进量
+{\bfseries} % 标题字体
+{.} % 标题后的标点
+{.5em} % 标题后的空间
+{} % 定理头部格式
+
+% 应用定理样式
+\theoremstyle{boldexercise}
+\newtheorem{exercise}{练习}[section]
+\newenvironment{solution}{\begin{proof}[\textbf{\emph 解}]}{\end{proof}}
 \begin{document}
 \maketitle
 
-\section{第一次作业}
+\section{第一次作业\LaTeX{}排版建议}
+
+\subsection{整体建议}
+
+\begin{enumerate}
+\item 建议辰辰可以使用ElegantPaper模板，就像本tex文件一样，这样能提高基础颜值。
+\item 建议辰辰可以使用一些如\lstinline|exercise|环境、\lstinline|proof|环境，
+  一方面可以自动编号，另一方面可以可以使得tex文件更加整齐，例如：
+\end{enumerate}
+
+\begin{exercise}
+  这是第一道练习题。
+\end{exercise}
+
+\begin{proof}
+  这是第一道题的证明。
+\end{proof}
+
+\subsection{一些细节建议}
+
+\begin{enumerate}
+\item 
+  辰辰对有些数学符号可能还不太熟悉，
+  例如$\sup$会打成$sup$，$\ln$会打成$ln$，
+  不过这些都是小细节问题！
+\item 一般数学和叙述并排时长公式尽量使用\lstinline|equation|环境，
+  并使用\lstinline|\quad|控制间距，
+  例如辰辰的1.4解答可以改为：
+  \begin{solution}
+    首先有
+    \begin{equation}
+      \label{eq:1}
+      e_{n+1} = x_{n+1} - r = x_n - \frac{f(x_n)}{f^{\prime}(x_n)} - r,
+    \end{equation}
+    由泰勒展开
+    \begin{equation}
+      0 = f(r) = f(x_n) + f^{\prime}(\psi_n)(r-x_n),\quad \psi_n \in (r,x_n),
+    \end{equation}
+    移项得到$f(x_n) = f^{\prime}(\psi_n)(x_n - r)$，将上式代入~(\ref{eq:1})得到
+    \begin{equation}
+      e_{n+1} = x_n - r - \frac{f^{\prime}(\psi_n)}{f^{\prime}(x_0)}(x_n - r),
+    \end{equation}
+    即$e_{n+1} = (1 - f^{\prime}(\psi_n)/f^{\prime}(x_0))(x_n - r)$，因此
+    \begin{equation}
+      C = 1 - \frac{f^{\prime}(\psi_n)}{f^{\prime}(x_0)}, \quad s = 1.\qedhere
+    \end{equation}
+  \end{solution}
+\item 分段函数啥嘟可以问问GPT！
+  \begin{equation}
+    f(x) =
+    \begin{cases}
+      a, & x < 1,\\
+      b, & x \in [0,1],\\
+      c, & x > 1
+    \end{cases}
+  \end{equation}
+\item 尽量少用\lstinline|\\|进行回车，尽量依靠自然换行，
+  比如本tex就没有一处使用了\lstinline|\\|，
+  辰辰可以试试看不用\lstinline|\\|的换行。
+\item 如果一个公式特别长，可以用\lstinline|align|环境，
+  例如辰辰1.8中的公式，可以改为：
+\end{enumerate}
+
+\begin{align}
+  f(x_n)&=f(r)+f'(r)(x_n-r)+\cdots+\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}\\
+        &=\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}
+\end{align}
+
+\begin{align}
+  f'(x_n)&=f'(r)+f''(r)(x_n-r)+\cdots+\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k\\
+         &=\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k.
+\end{align}
+
+\begin{align}
+  x_{n+1}-r&=x_n-r-\frac{f(x_n)}{f'(x_n)}\\
+           &=x_n-r-k\cdot\frac{\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}}{\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k}\\
+           &=\frac{(\frac{f^{k+1}(\psi)}{k!}-k\cdot\frac{f^{k+1}(\xi)}{(k+1)!})e_n^{k+1}}{\frac{f^k(r)}{(k-1)!}e_{n}^{k-1}+\frac{f^{k+1}(\psi)}{k!}e_{n}^k}
+\end{align}
+
+
 
 \end{document} 
