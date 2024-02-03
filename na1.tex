@@ -1,62 +1,210 @@
-\documentclass[UTF8]{ctexart}
+\documentclass[lang=cn,bibend=bibtex]{elegantpaper}
 \title{数值分析作业}
 \author{叶晓辰}
 \date{\today}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\newtheoremstyle{boldexercise}
+{3pt}
+{3pt}
+{}
+{}
+{\bfseries}
+{.}
+{.5em}
+{}
+
+\theoremstyle{boldexercise}
+\newtheorem{exercise}{练习}[section]
+\newenvironment{solution}{\begin{proof}[\textbf{\emph 解}]}{\end{proof}}
 \begin{document}
 \maketitle
-\section{第一次作业}
-\subsection{}
-(1)第n步的间隔长度：$\frac{1}{2^{n-1}}$.
-(2)$sup\vert r-c_{n}\vert=\frac{1}{2^{n}}$.
-\subsection{}
-由题意，$sup\vert r-c_{n}\vert= \frac{b_{0}-a_{0}}{2^{n+1}}$.
-相对误差：$e=\frac{sup \vert r-c_{n} \vert}{r}\le \frac{b_{0}-a_{0}}{2^{n+1}\cdot a_{0}}$.
-由题意有：
-  $e \textless \epsilon .$
-于是：
-\[ \frac{b_{0}-a_{0}}{2^{n+1}\cdot a_{0} }\textless \epsilon .\]
-两边同时作用$ln$，化简即得:
-\[ n \ge \frac{ln(b_{0}-a_{0})-ln\epsilon-lna_{0}}{ln2}-1. \]
-\subsection{} 
-家里计算器不造跑哪去了，不算啦！
-\subsection{}
-$e_{n+1}=x_{n+1}-r=x_n-\frac{f(x_n)}{f'(x_0)}-r.$ \\
-由泰勒展开，$0=f(r)=f(x_n)+f'(\psi_n)(r-x_n), \psi_n\in (r,x_n)$.\\
-移项得到，$f(x_n)=f'(\psi_n)(x_n-r)$.\\
-将上式代入(1)，$e_{n+1}=x_n-r-\frac{f'(\psi_n)}{f'(x_0)}(x_n-r)$. \\ 
-即，$e_{n+1}=(1-\frac{f'(\psi_n)}{f'(x_0)})(x_n-r).$\\
-所以有，$C=1-\frac{f'(\psi_n)}{f'(x_0)}, s=1.$
-\subsection{}
-$x_{n+1}=arctanx_n$\\
-$f(x)=arctanx,  f:(\frac{-\pi}{2},\frac{\pi}{2})\rightarrow (\frac{-\pi}{2},\frac{\pi}{2})$
-\begin{itemize}
-\item 当$x \in (\frac{-\pi}{2},0]$时，$arctanx \ge x$,
-\item 当$x \in (0,\frac{\pi}{2})$时，$arctanx \textless x$.
-\end{itemize}
-(这里的分段函数死活打不出来qaq)\\
-对$x_0$分类讨论:
-\begin{itemize}
-\item 当$x_0\in(0,\frac{\pi}{2})$时，由归纳知，$\forall n, x_n \in (0,\frac{\pi}{2})$ ，从而$x_{n+1}=arctanx_n\textless x_n$，从而\{$x_n$\}是单调递减的数列。结合其有下界，故由单调有界定理，极限存在，为0.
-\item $x_{0} \in (\frac{-\pi}{2},0]$时，同理可知\{$x_n$\}极限存在，为0.
-\end{itemize}
-\subsection{}
-$x_1=\frac{1}{p}, x_{n+1}=\frac{1}{p+x_n}$.\\
-$f(x)=\frac{1}{p+x},f:(0,1)\rightarrow (0,1),f'(x)=-\frac{1}{(x+p)^2}.$\\
-$\vert f'(x)\vert \le \frac{1}{p^2} \textless 1, \forall x\in(0,1)$.\\
-由压缩映射的推论易知，\{x$_n$\}收敛.
-\subsection{}
-此时，$\frac{b_0-a_0}{2^{n+1}\cdot \vert r \vert}\textless \epsilon$.\\
-两边同时作用$ln$，得到，$ln(b_0-a_0)\le(n+1)ln2+ln\vert r \vert +ln\epsilon$.\\
-整理得，$n \ge \frac{ln(b_0-a_0)-ln\vert r\vert- ln\epsilon}{ln2}-1$.
-因为r未知且可以很靠近0,所以n可能很大，此处控制相对误差不合适。
-\subsection{}
-(1)此时收敛速度很慢.\\
-(2)
-由泰勒展开\\
-$f(x_n)=f(r)+f'(r)(x_n-r)+\cdots+\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}=\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}.$\\
-$f'(x_n)=f'(r)+f''(r)(x_n-r)+\cdots+\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k=\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k.$\\ 
-$x_{n+1}-r=x_n-r-\frac{f(x_n)}{f'(x_n)}=x_n-r-k\cdot\frac{\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}}{\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k}=\frac{(\frac{f^{k+1}(\psi)}{k!}-k\cdot\frac{f^{k+1}(\xi)}{(k+1)!})e_n^{k+1}}{\frac{f^k(r)}{(k-1)!}e_{n}^{k-1}+\frac{f^{k+1}(\psi)}{k!}e_{n}^k}$.\\
-由上式易知，收敛阶为2.
 
+\section{数值分析第一次作业}
+%1.1
+\begin{exercise}
+  Consider the bisection method starting with the initial interval [1.5,3.5]. In the following questions ``interval''refers to the bisection interval whose width changes across different loops.
+\begin{itemize}
+  \item What is the width of the interval at the $n$th step?
+  \item What is the supremum of the distance between the root $r$ and the midpoint of the interval? 
+\end{itemize}
+\end{exercise}
+\begin{solution}
+  (1)第n步的间隔长度：$\frac{1}{2^{n-1}}$.
+  (2) $\sup\vert r-c_{n}\vert=\frac{1}{2^{n}}$.
+\end{solution}
+%1.2
+\begin{exercise}
+  In using the bisection algorithm with its initial interval as [$a_0$,b$_0$], with $a_0 \textgreater 0$,we want to determine the root with its relative error no greater than $\epsilon$. Prove that this goal of accuracy is guaranteed by the following choice of the number of steps,
+  \begin{equation*}
+    n \ge \frac{\log(b_0-a_0)-\log\epsilon-\log a_0}{\log 2}-1.
+  \end{equation*}
+\end{exercise}
+\begin{solution}
+  由题意
+  \begin{equation}
+    \label{eq:1.2.1}
+    \sup\vert r-c_{n}\vert= \frac{b_{0}-a_{0}}{2^{n+1}}.
+  \end{equation}
+  相对误差
+  \begin{equation}
+    \label{eq:1.2.2}
+    e=\frac{\sup \vert r-c_{n} \vert}{r}\le \frac{b_{0}-a_{0}}{2^{n+1}\cdot a_{0}}.
+  \end{equation}
+  由题意有
+    $e \textless \epsilon$.
+  于是
+  \begin{equation}
+    \label{eq:1.2.3}
+     \frac{b_{0}-a_{0}}{2^{n+1}\cdot a_{0} }\textless \epsilon .
+  \end{equation}
+  两边同时作用$\ln$，化简即得
+  \begin{equation}
+    \label{eq:1.2.4}
+     n \ge \frac{\ln(b_{0}-a_{0})-\ln\epsilon-\ln a_{0}}{\ln2}-1. 
+  \end{equation}
+\end{solution}
+%1.3
+\begin{exercise}
+  Perform four iterations of Newton's method for the polynomial equation $p(x)=4x^3-2x^2+3=0$ with the starting point $x_0=-1$. Use a hand calculator and organize results of the iterations in a table.
+\end{exercise}
+\begin{solution}
+  家里计算器不造跑哪去了，不算啦！
+\end{solution}
+%1.4
+\begin{exercise}
+  Consider a variation of Newton's method in which only the derivative at $x_0$is used,
+  \begin{equation*}
+    \label{eq:2}
+   x_{n+1}=x_n-\frac{f(x_n)}{f'(x_0)}. 
+  \end{equation*}
+  Find $C$ and $s$ such that
+  \begin{equation*}
+    \label{eq:3}
+   e_{n+1}=Ce_n^s. 
+  \end{equation*}
+  where$e_n$ is the error of Newton's method at step n, $s$ is a constant , and $C$ may depend on $x_n$, the true solution $\alpha$, and the derivative of the function $f$.
+\end{exercise}
+\begin{solution}
+  \begin{equation}
+    \label{eq:1.4.0}
+    e_{n+1}=x_{n+1}-r=x_n-\frac{f(x_n)}{f'(x_0)}-r.
+  \end{equation}
+  由泰勒展开
+  \begin{equation}
+    \label{eq:1.4.1}
+    0=f(r)=f(x_n)+f'(\psi_n)(r-x_n), \psi_n\in (r,x_n).
+  \end{equation}
+  移项得到
+    $f(x_n)=f'(\psi_n)(x_n-r)$,
+  将其代入~(\ref{eq:1.4.0})得
+  \begin{equation}
+    \label{eq:1.4.4}
+    e_{n+1}=x_n-r-\frac{f'(\psi_n)}{f'(x_0)}(x_n-r). 
+  \end{equation}
+  即
+   $ e_{n+1}=(1-\frac{f'(\psi_n)}{f'(x_0)})(x_n-r).$
+  所以有
+  \begin{equation}
+    \label{eq:1.4.6}
+    C=1-\frac{f'(\psi_n)}{f'(x_0)}, s=1.
+  \end{equation}
+\end{solution}
+%1.5
+\begin{exercise}
+ Within$(-\frac{\pi}{2},\frac{\pi}{2})$, will the iteration $x_{n+1}=\arctan x_n$ converge? 
+\end{exercise}
+\begin{solution}
+  \begin{equation}
+    \label{eq:1.5.1}
+    f(x)=arctanx,  f:(-\frac{\pi}{2},\frac{\pi}{2})\rightarrow (-\frac{\pi}{2},\frac{\pi}{2})
+  \end{equation}
+  \begin{equation}
+    \label{eq:1.5.2}
+    \arctan x 
+    \begin{cases}
+      \ge x,& x \in(\frac{-\pi}{2},0],\\
+      \textless x,& x \in (0,\frac{\pi}{2})
+    \end{cases}
+  \end{equation}
+  对$x_0$分类讨论:
+  \begin{itemize}
+  \item 当$x_0\in(0,\frac{\pi}{2})$时，由归纳知，$\forall n, x_n \in (0,\frac{\pi}{2})$ ，从而$x_{n+1}=arctanx_n\textless x_n$，从而\{$x_n$\}是单调递减的数列。结合其有下界，故由单调有界定理，极限存在，为0.
+  \item $x_{0} \in (\frac{-\pi}{2},0]$时，同理可知\{$x_n$\}极限存在，为0.
+  \end{itemize}
+\end{solution}
+%1.6
+\begin{exercise}
+  Let $p\textgreater1$.What is the value of the following continued fraction?
+  \begin{equation*}
+   x=\frac{1}{p+\frac{1}{p+\frac{1}{p+\cdots}}} .
+  \end{equation*}
+  Prove that the sequence of values converges.
+\end{exercise}
+\begin{solution}
+  \begin{equation}
+    \label{eq:1.6.1}
+    f(x)=\frac{1}{p+x},f:(0,1)\rightarrow (0,1).
+  \end{equation}
+  \begin{equation}
+    \label{eq:1.6.2}
+    f'(x)=-\frac{1}{(x+p)^2}, \quad
+    \vert f'(x)\vert \le \frac{1}{p^2} \textless 1, \forall x\in(0,1).
+  \end{equation}
+     \quad\quad 又因为 $x_1=\frac{1}{p}, x_{n+1}=\frac{1}{p+x_n}.$\quad
+  由压缩映射的推论易知，\{x$_n$\}收敛.
+\end{solution}
+%1.7
+\begin{exercise}
+What happens in problem 1.2. if $a_0\textless0\textlessb_0$? Derive an inequality of the number of steps similar to that in 1.2. In this case,is the relative error still an appropriate measure?
+\end{exercise}
+\begin{solution}
+  由题意
+  \begin{equation}
+    \label{eq:1.7.1}
+    \frac{b_0-a_0}{2^{n+1}\cdot \vert r \vert}\textless \epsilon.
+  \end{equation}
+  两边同时作用$\ln$，得到
+  \begin{equation}
+    \label{eq:1.7.2}
+    \ln (b_0-a_0)\le(n+1)\ln 2+\ln\vert r \vert +\ln\epsilon.
+  \end{equation}
+  整理得
+  \begin{equation}
+    \label{eq:1.7.3}
+    n \ge \frac{\ln(b_0-a_0)-\ln\vert r\vert- \ln\epsilon}{\ln2}-1.
+  \end{equation}
+  因为r未知且可以很靠近0，所以n可能很大，此处控制相对误差不合适。
+\end{solution}
+%1.8
+\begin{exercise}
+  Consider solving $f(x)=0$ $(f\in {\cal{C}}^{k+1})$ by Newton's method with the starting point $x_0$ close to a root of multiplicity $k$. Note that $\alpha$ is a zero of multiplicity $k$ of the function $f$ iff
+  \begin{equation*}
+    \label{eq:4}
+    f^{(k)}(\alpha)\neq 0; \quad \forall i \textless k,f^{(i)}(\alpha)=0.
+  \end{equation*}
+\end{exercise}
+\begin{solution}
+  (1)此时收敛速度很慢.\\
+  (2)
+  由泰勒展开\\
+  \begin{align}
+    f(x_n)&=f(r)+f'(r)(x_n-r)+\cdots+\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}\\
+          &=\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}.
+  \end{align}
+  \begin{align}
+    f'(x_n)&=f'(r)+f''(r)(x_n-r)+\cdots+\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k\\
+           &=\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k. 
+  \end{align}
+
+  将上式代入$x_{n+1}-r&=x_n-r-\frac{f(x_n)}{f'(x_n)}$中
+  \begin{align}
+    x_{n+1}-r&=x_n-r-\frac{f(x_n)}{f'(x_n)}\\
+             &=x_n-r-k\cdot\frac{\frac{f^k(r)}{k!}(x_n-r)^k+\frac{f^{k+1}(\xi)}{(k+1)!}(x_n-r)^{k+1}}{\frac{f^k(r)}{(k-1)!}(x_n-r)^{k-1}+\frac{f^{k+1}(\psi)}{k!}(x_n-r)^k}\\
+             &=\frac{(\frac{f^{k+1}(\psi)}{k!}-k\cdot\frac{f^{k+1}(\xi)}{(k+1)!})e_n^{k+1}}{\frac{f^k(r)}{(k-1)!}e_{n}^{k-1}+\frac{f^{k+1}(\psi)}{k!}e_{n}^k}.
+  \end{align}
+
+  由上式易知，收敛阶为2.
+\end{solution}
 
 \end{document} 
